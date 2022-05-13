@@ -1,4 +1,4 @@
-п»ї#include <iostream>
+#include <iostream>
 #include <windows.h>
 #include <fstream>
 
@@ -8,28 +8,44 @@ int main()
 {
     setlocale(LC_ALL, "rus");
     ifstream file("FileWork.txt");
-
-    char fopen[255];
+	
+	int num;
     int n = 0;
+    int j = 0;
+    string line;
     struct item
     {
         char name[30];
-        int count[4];
-        int fabric[4];
+        char count[4];
+        int fabric;
     };
 
-    item items[8];
+    item items[255];
+    
+    cout << "Введите номер нужного цеха: ";
+    cin >> num;
 
     if (file.is_open()) {
         
         while (!file.eof()) {
-            file.getline(fopen, 255, '\n');
-            cout << fopen << endl;
-            items[n].name = fopen;
+            getline(file, line);
+           	switch(j){
+           		case 0: strcpy(items[n].name, line.c_str());
+           		j++;
+           		break;
+           		case 1: strcpy(items[n].count, line.c_str());
+           		j++;
+           		break;
+           		case 2: items[n].fabric = atoi(line.c_str());
+           		if(items[n].fabric == num){
+           			cout << items[n].name;
+           		}
+           		j=0;
+            	break;
+            }
             n++;
         }
         file.close();
-        cout << fopen << endl;
     }
 
 }
